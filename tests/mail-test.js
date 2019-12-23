@@ -15,6 +15,14 @@ describe('Mail', () => {
 		sandbox.restore();
 	});
 
+	const prepareErrorData = (code, message) => {
+		return {
+			name: 'MailError',
+			message,
+			code
+		};
+	};
+
 	describe('Send', () => {
 
 		describe('Mail structure required validations', () => {
@@ -23,22 +31,20 @@ describe('Mail', () => {
 
 				const mail = new Mail();
 
-				assert.rejects(mail.setTo('string').send(), {
-					name: 'MailError',
-					message: 'Empty field: templateCode property is required',
-					code: MailError.codes.REQUIRED_FIELD_MISSING
-				});
+				assert.rejects(mail.setTo('string').send(), prepareErrorData(
+					MailError.codes.REQUIRED_FIELD_MISSING,
+					'Empty field: templateCode property is required'
+				));
 			});
 
 			it('Should throw when the value to is missing', () => {
 
 				const mail = new Mail();
 
-				assert.rejects(mail.setTemplateCode('string').send(), {
-					name: 'MailError',
-					message: 'Empty field: to property is required',
-					code: MailError.codes.REQUIRED_FIELD_MISSING
-				});
+				assert.rejects(mail.setTemplateCode('string').send(), prepareErrorData(
+					MailError.codes.REQUIRED_FIELD_MISSING,
+					'Empty field: to property is required'
+				));
 			});
 		});
 
@@ -52,11 +58,7 @@ describe('Mail', () => {
 					.setTemplateCode('template-code')
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: to property must be an array or string',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: to property must be an array or string'));
 			});
 
 			it('Should throw when the value \'templateCode\' are not a string or array', () => {
@@ -67,11 +69,7 @@ describe('Mail', () => {
 					.setTemplateCode({ templateCode: 'template-code' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: templateCode property must be a string or number',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: templateCode property must be a string or number'));
 			});
 
 			it('Should throw when the value \'cc\' are not a string or array', () => {
@@ -83,11 +81,7 @@ describe('Mail', () => {
 					.setCC({ CC: 'cc addresses' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: cc property must be an array or string',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: cc property must be an array or string'));
 			});
 
 			it('Should throw when the value \'bcc\' are not a string or array', () => {
@@ -99,11 +93,7 @@ describe('Mail', () => {
 					.setBCC({ BCC: 'bcc addresses' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: bcc property must be an array or string',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: bcc property must be an array or string'));
 			});
 
 			it('Should throw when the value \'replyTo\' are not a string or array', () => {
@@ -115,11 +105,7 @@ describe('Mail', () => {
 					.setReplyTo({ replyTo: 'replyTo addresses' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: replyTo property must be an array or string',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: replyTo property must be an array or string'));
 			});
 
 			it('Should throw when the value \'entity\' are not a string or number', () => {
@@ -131,11 +117,7 @@ describe('Mail', () => {
 					.setEntity({ entity: 'entity addresses' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: entity property must be an string or number',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: entity property must be an string or number'));
 			});
 
 			it('Should throw when the value \'entityId\' are not a string or number', () => {
@@ -147,11 +129,7 @@ describe('Mail', () => {
 					.setEntityId({ entityId: 'entityId addresses' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: entityId property must be an string or number',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: entityId property must be an string or number'));
 			});
 
 			it('Should throw when the value \'subject\' are not a string or number', () => {
@@ -163,11 +141,7 @@ describe('Mail', () => {
 					.setSubject({ subject: 'subject addresses' })
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: subject property should be a string or number',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: subject property should be a string or number'));
 			});
 
 			it('Should throw when the value \'data\' are not a object', () => {
@@ -179,11 +153,7 @@ describe('Mail', () => {
 					.setData('data in string')
 					.send();
 
-				assert.rejects(mailData, {
-					name: 'MailError',
-					message: 'Invalid mail: data property should be a object',
-					code: MailError.codes.INVALID_FIELD_TYPE
-				});
+				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: data property should be a object'));
 			});
 		});
 
