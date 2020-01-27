@@ -5,9 +5,7 @@ const assert = require('assert');
 
 const sandbox = require('sinon').createSandbox();
 
-const Mail = require('./../lib/mail');
-
-const MailError = require('./../lib/mail-error');
+const { Mail, MailError } = require('./../lib/index');
 
 describe('Mail', () => {
 

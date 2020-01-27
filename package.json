@@ -2,7 +2,7 @@
   "name": "@janiscommerce/mail",
   "version": "1.0.0",
   "description": "A package to handle emails",
-  "main": "lib/mail.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "export TEST_ENV=true; mocha --exit -R nyan --recursive tests/",
     "test-ci": "nyc --reporter=html --reporter=text mocha --recursive tests/",
