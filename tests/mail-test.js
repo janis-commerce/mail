@@ -68,10 +68,24 @@ describe('Mail', () => {
 
 				assert.rejects(mail.setBody('string')
 					.setTo('info@fizzmod.com')
+					.setSubject('crazy subject')
 					.send(),
 				prepareErrorData(
 					MailError.codes.REQUIRED_FIELD_MISSING,
 					'Empty field: clientCode or SessionInstance property is required to send a email'
+				));
+			});
+
+			it('Should throw when the value subject is missing and body is setted', () => {
+
+				const mail = new Mail();
+
+				assert.rejects(mail.setBody('string')
+					.setTo('info@fizzmod.com')
+					.send(),
+				prepareErrorData(
+					MailError.codes.REQUIRED_FIELD_MISSING,
+					'Empty field: subject property is required when templateCode is not setted'
 				));
 			});
 		});
@@ -85,6 +99,7 @@ describe('Mail', () => {
 				const mailData = mail.setTo({ wrongFiel: 'string' })
 					.setBody('body string')
 					.setClientCode('clientCode')
+					.setSubject('crazy subject')
 					.send();
 
 				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: to property must be an array or string'));
@@ -212,6 +227,7 @@ describe('Mail', () => {
 				const mailData = mail.setTo('string')
 					.setBody({ entity: 'entity addresses' })
 					.setClientCode('clientCode')
+					.setSubject('crazy subject')
 					.send();
 
 				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: body property must be a string'));
@@ -277,6 +293,7 @@ describe('Mail', () => {
 				mail.session = session;
 				const mailData = mail.setBody('body string to send')
 					.setTo('info@fizzmod.com')
+					.setSubject('crazy subject')
 					.send();
 
 				assert.deepStrictEqual(await mailData, { id: '5de565c07de99000110dcdef' });
@@ -286,7 +303,7 @@ describe('Mail', () => {
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
-					{ body: 'body string to send', to: 'info@fizzmod.com' },
+					{ body: 'body string to send', to: 'info@fizzmod.com', subject: 'crazy subject' },
 					headers
 				);
 			});

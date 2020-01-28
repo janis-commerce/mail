@@ -12,11 +12,11 @@ npm install @janiscommerce/mail
 ```
 ## Available methods
 The methods that yo can use to create the email:
-- **`setTo [String|Array]`** (required required If body is setted): This method is use to set the emails addresses to send the email
-- **`setTemplateCode [String|Array]`** (required If body is not setted): This method is use to set the template code of the email
-- **`setBody [String]`** (required required If templateCode is not setted): This method is use to set the body of the email.
+- **`setTo [String|Array]`** (required if body is setted): This method is use to set the emails addresses to send the email
+- **`setTemplateCode [String|Array]`** (required if body is not setted): This method is use to set the template code of the email
+- **`setBody [String]`** (required if templateCode is not setted): This method is use to set the body of the email.
 - **`setData [Object]`** (optional): This method is use to set the data to the email.
-- **`setSubject [String]`** (optional): This method is use to set the  subject of the email.
+- **`setSubject [String]`** (required if templateCode is not setted): This method is use to set the  subject of the email.
 - **`setCC [String|Array]`** (optional): This method is use to set the cc of the email.
 - **`setBCC [String|Array]`** (optional): This method is use to set the bcc of the email.
 - **`setReplyTo [String|Array]`** (optional): This method is use to set the reply to of the email.
@@ -46,8 +46,7 @@ class ApiExample extends API {
     const mail = this.session.getSessionInstance(Mail);
 
     try {
-      await mail.setTemplateCode('string email')
-        .send();
+      await mail.setTemplateCode('string email').send();
     } catch(error) {
         console.log(error);
     }
@@ -62,7 +61,12 @@ module.exports = ApiExample;
 ```js
 const Mail = require('@janiscommerce/mail');
 
-Mail.setBody('client-code').send();
+const mail = new Mail();
+
+await mail.setBody('client-code')
+  .setSubject('subject of the email')
+  .setTo('example@example.com')
+  .send();
 ```
 
 ### Complete Usage
@@ -70,7 +74,9 @@ Mail.setBody('client-code').send();
 ```js
 const Mail = require('@janiscommerce/mail');
 
-Mail.setTo('some-client')
+const mail = new Mail();
+
+await mail.setTo('some-client')
   .setCC('mail@example.com')
   .setBCC(['mail@example.com'])
   .setReplyTo(['mail@example.com'])
