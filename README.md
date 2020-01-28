@@ -21,6 +21,8 @@ The `Mail [Object]` parameter have the following structure:
 - **`replyTo [String|Array]`** (optional): The emails addresses to send the replyTo of the email.
 - **`entity [String|Number]`** (optional): The entity to associated to the email.
 - **`entity_id [String|Number]`** (optional): The entity Id to associated to the email.
+- **`body [String]`** (optional): The body to use for the email.
+- **`clientCode [String]`** (optional): The clientCode to use for sent the email from the correct client.
 
 ### Mail example
 ```js
@@ -51,13 +53,19 @@ Mail.setTo('some-client')
   .setSubject('Email Subject')
   .setEntity('order')
   .setEntityId('5de565c07de99000110dcdef')
+  .setBody('body of email')
   .setData({
   		someField: 'someFieldValue',
   		otherField: 'otherFieldValue'
   })
   .setTemplateCode('template-code')
+  .setClientCode('client-code')
   .send();
 ```
+
+## ClientCode injection
+The package needs the clientCode to be able to send the emails and these same ones save in the base of the correct client, since it uses the MS of Janis Mailing.
+You can instanciate the Package from a service by doing `this.session.getSessionInstance(Mail)`, or even when generating the email, add the `clientCode` using the `.setClientCode('clientCode')` method, and it will be sent with the apiKeys of the service with which you are using the package.
 
 ## Errors
 
@@ -69,5 +77,4 @@ The codes are the following:
 |------|--------------------------------|
 | 1    | Requiered field missing        |
 | 2    | Invalid field type             |
-| 3    | No Service Name Setted         |
-| 4    | Microservice call Error        |
+| 3    | Microservice call Error        |
