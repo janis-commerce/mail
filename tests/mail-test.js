@@ -34,9 +34,9 @@ describe('Mail', () => {
 			clientCode: 'fizzmodarg',
 			profileId: '5d1fc1eeb5b68406e0487a08',
 			permissions: []
-		}
+		},
+		getSessionInstance: () => new MicroserviceCall()
 	};
-
 
 	describe('Send', () => {
 
