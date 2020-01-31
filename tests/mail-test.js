@@ -35,7 +35,11 @@ describe('Mail', () => {
 			profileId: '5d1fc1eeb5b68406e0487a08',
 			permissions: []
 		},
-		getSessionInstance: () => new MicroserviceCall()
+		getSessionInstance: TheClass => {
+			const instance = new TheClass();
+			instance.session = session;
+			return instance;
+		}
 	};
 
 	describe('Send', () => {
