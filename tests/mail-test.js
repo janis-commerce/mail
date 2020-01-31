@@ -5,7 +5,7 @@ const assert = require('assert');
 
 const sandbox = require('sinon').createSandbox();
 
-const { Mail, MailError } = require('./../lib/index');
+const { Mail, MailError } = require('../lib');
 
 const JANIS_MAILING_SERVICE = 'mailing';
 const JANIS_MAILING_NAMESPACE = 'email';
@@ -42,7 +42,7 @@ describe('Mail', () => {
 
 		describe('Mail structure required validations', () => {
 
-			it('Should throw when the values templateCode or body are missing', () => {
+			it('Should throw when the values templateCode and body are missing', () => {
 
 				const mail = new Mail();
 
@@ -52,17 +52,17 @@ describe('Mail', () => {
 				));
 			});
 
-			it('Should throw when the value to is missing and body is setted', () => {
+			it('Should throw when the value to is missing and body is set', () => {
 
 				const mail = new Mail();
 
 				assert.rejects(mail.setBody('string').send(), prepareErrorData(
 					MailError.codes.REQUIRED_FIELD_MISSING,
-					'Empty field: to property is required when templateCode is not setted'
+					'Empty field: to property is required when templateCode is not set'
 				));
 			});
 
-			it('Should throw when the value clientCode is missing and the session is not setted', () => {
+			it('Should throw when the value clientCode is missing and the session is not set', () => {
 
 				const mail = new Mail();
 
@@ -76,7 +76,7 @@ describe('Mail', () => {
 				));
 			});
 
-			it('Should throw when the value subject is missing and body is setted', () => {
+			it('Should throw when the value subject is missing and body is set', () => {
 
 				const mail = new Mail();
 
@@ -85,7 +85,7 @@ describe('Mail', () => {
 					.send(),
 				prepareErrorData(
 					MailError.codes.REQUIRED_FIELD_MISSING,
-					'Empty field: subject property is required when templateCode is not setted'
+					'Empty field: subject property is required when templateCode is not set'
 				));
 			});
 		});
@@ -207,7 +207,7 @@ describe('Mail', () => {
 				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: data property should be a object'));
 			});
 
-			it('Should throw when the value \'clientCode\' are not a string', () => {
+			it('Should throw when the value of \'clientCode\' is not a string', () => {
 
 				const mail = new Mail();
 
@@ -220,7 +220,7 @@ describe('Mail', () => {
 				assert.rejects(mailData, prepareErrorData(MailError.codes.INVALID_FIELD_TYPE, 'Invalid mail: clientCode property must be a string'));
 			});
 
-			it('Should throw when the value \'body\' are not a string', () => {
+			it('Should throw when the value of \'body\' is not a string', () => {
 
 				const mail = new Mail();
 
@@ -247,11 +247,11 @@ describe('Mail', () => {
 
 				const mail = new Mail();
 				mail.session = session;
-				const mailData = mail.setTo('info@fizzmod.com')
-					.setTemplateCode('template-code')
-					.send();
 
-				assert.rejects(mailData, microserviceCallError);
+				await assert.rejects(() => mail
+					.setTo('info@fizzmod.com')
+					.setTemplateCode('template-code')
+					.send(), microserviceCallError);
 
 				sandbox.assert.calledOnce(MicroserviceCall.prototype.post);
 				sandbox.assert.calledWithExactly(MicroserviceCall.prototype.post,
