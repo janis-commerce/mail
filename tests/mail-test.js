@@ -71,7 +71,7 @@ describe('Mail', () => {
 				const mail = new Mail();
 
 				assert.rejects(mail.setBody('string')
-					.setTo('info@fizzmod.com')
+					.setTo('example@example.com')
 					.setSubject('crazy subject')
 					.send(),
 				prepareErrorData(
@@ -85,7 +85,7 @@ describe('Mail', () => {
 				const mail = new Mail();
 
 				assert.rejects(mail.setBody('string')
-					.setTo('info@fizzmod.com')
+					.setTo('example@example.com')
 					.send(),
 				prepareErrorData(
 					MailError.codes.REQUIRED_FIELD_MISSING,
@@ -253,7 +253,7 @@ describe('Mail', () => {
 				mail.session = session;
 
 				await assert.rejects(() => mail
-					.setTo('info@fizzmod.com')
+					.setTo('example@example.com')
 					.setTemplateCode('template-code')
 					.send(), microserviceCallError);
 
@@ -262,7 +262,7 @@ describe('Mail', () => {
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
-					{ templateCode: 'template-code', to: 'info@fizzmod.com' },
+					{ templateCode: 'template-code', to: 'example@example.com' },
 					headers
 				);
 			});
@@ -296,7 +296,7 @@ describe('Mail', () => {
 				const mail = new Mail();
 				mail.session = session;
 				const mailData = mail.setBody('body string to send')
-					.setTo('info@fizzmod.com')
+					.setTo('example@example.com')
 					.setSubject('crazy subject')
 					.send();
 
@@ -307,7 +307,7 @@ describe('Mail', () => {
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
-					{ body: 'body string to send', to: 'info@fizzmod.com', subject: 'crazy subject' },
+					{ body: 'body string to send', to: 'example@example.com', subject: 'crazy subject' },
 					headers
 				);
 			});
