@@ -20,9 +20,10 @@ The methods that you can use to create the email:
 - **`setSubject [String]`** (required if templateCode is not set): This method sets the subject of the email.
 - **`setCC [String|Array]`**: This method sets the CC of the email.
 - **`setBCC [String|Array]`**: This method sets the BCC of the email.
-- **`setReplyTo [String|Array]`**: This method sets the Reply To of the email.
+- **`setReplyTo [String]`**: This method sets the Reply To of the email.
 - **`setEntity [String|Number]`**: This method sets the entity related to the email.
 - **`setEntityId [String|Number]`**: This method sets the entity ID related to the email.
+- **`setUserCreated [String]`**: This method sets the User ID related to the user that triggered the mail.
 
 ## ClientCode injection
 
@@ -112,6 +113,7 @@ await mail.setClientCode('client-code')
 	.setReplyTo(['mail@example.com']) // Merges with template data
 	.setEntity('order')
 	.setEntityId('5de565c07de99000110dcdef')
+	.setUserCreated('6de565c07de99000110dcdef')
 	.setData({
 		someField: 'someFieldValue',
 		otherField: 'otherFieldValue'
@@ -150,6 +152,7 @@ await mail.setClientCode('client-code')
 	.setSubject('Email Subject')
 	.setEntity('order')
 	.setEntityId('5de565c07de99000110dcdef')
+	.setUserCreated('6de565c07de99000110dcdef')
 	.setBody('body of email')
 	.setData({
 		someField: 'someFieldValue',
