@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0] - 2020-04-06
+### Added
+- `setUserCreated` setter
+- Now injected session is used to set `userCreated` automatically
+
+### Changed
+- `replyTo` can now be only a string (**BREAKING CHANGE**)
+- Mailing APIs now receive always arrays for `to`, `cc` and `bcc` properties.
+
+### Fixed
+- Package tests were improved. Now it's much more reliable :wink:
+
 ## [1.1.0] - 2020-01-31
 ### Added
 - New methods: `setClientCode` and `setBody`
