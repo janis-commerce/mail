@@ -1,7 +1,8 @@
 # mail
 
-[![Build Status](https://travis-ci.org/janis-commerce/mail.svg?branch=master)](https://travis-ci.org/janis-commerce/mail)
+![Build Status](https://github.com/janis-commerce/mail/workflows/Build%20Status/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/janis-commerce/mail/badge.svg?branch=master)](https://coveralls.io/github/janis-commerce/mail?branch=master)
+[![npm version](https://badge.fury.io/js/%40janiscommerce%2Fmail.svg)](https://www.npmjs.com/package/@janiscommerce/mail)
 
 A package to handle emails
 

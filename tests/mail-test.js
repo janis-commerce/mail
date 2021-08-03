@@ -15,7 +15,7 @@ let headers = {};
 describe('Mail', () => {
 
 	beforeEach(() => {
-		sinon.stub(MicroserviceCall.prototype, 'post');
+		sinon.stub(MicroserviceCall.prototype, 'call');
 	});
 
 	afterEach(() => {
@@ -272,7 +272,7 @@ describe('Mail', () => {
 					code: MailError.codes.MS_CALL_ERROR
 				};
 
-				MicroserviceCall.prototype.post.resolves(microserviceCallError);
+				MicroserviceCall.prototype.call.resolves(microserviceCallError);
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -281,8 +281,8 @@ describe('Mail', () => {
 					.setTemplateCode('template-code')
 					.send(), microserviceCallError);
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post,
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call,
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -297,7 +297,7 @@ describe('Mail', () => {
 
 			it('Should send the email with a templateCode', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -306,8 +306,7 @@ describe('Mail', () => {
 
 				assert.deepStrictEqual(mailData, { id: '5de565c07de99000110dcdef' });
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post,
+				sinon.assert.calledOnceWithExactly(MicroserviceCall.prototype.call,
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -321,7 +320,7 @@ describe('Mail', () => {
 
 			it('Should send the email with a body', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -332,8 +331,8 @@ describe('Mail', () => {
 
 				assert.deepStrictEqual(mailData, { id: '5de565c07de99000110dcdef' });
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post,
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call,
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -349,7 +348,7 @@ describe('Mail', () => {
 
 			it('Should send the email with a clientCode', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = new Mail();
 				const mailData = await mail.setTemplateCode('template-code')
@@ -360,8 +359,8 @@ describe('Mail', () => {
 
 				headers = { 'janis-client': 'clientCode' };
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post,
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call,
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -372,7 +371,7 @@ describe('Mail', () => {
 
 			it('Should send the email with a custom userCreated', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = new Mail();
 				const mailData = await mail.setTemplateCode('template-code')
@@ -384,8 +383,8 @@ describe('Mail', () => {
 
 				headers = { 'janis-client': 'clientCode' };
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post,
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call,
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -399,7 +398,7 @@ describe('Mail', () => {
 
 			it('Should not override custom userCreated with the one in the session', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -409,8 +408,8 @@ describe('Mail', () => {
 
 				assert.deepStrictEqual(mailData, { id: '5de565c07de99000110dcdef' });
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post,
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call,
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -424,7 +423,7 @@ describe('Mail', () => {
 
 			it('Should send \'to\' property always as an array', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -432,8 +431,8 @@ describe('Mail', () => {
 					.setTo('example@example.com')
 					.send();
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post.getCall(0),
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call.getCall(0),
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -449,8 +448,8 @@ describe('Mail', () => {
 					.setTo(['example2@example.com'])
 					.send();
 
-				sinon.assert.calledTwice(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post.getCall(1),
+				sinon.assert.calledTwice(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call.getCall(1),
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -465,7 +464,7 @@ describe('Mail', () => {
 
 			it('Should send \'cc\' property always as an array', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -473,8 +472,8 @@ describe('Mail', () => {
 					.setCC('example@example.com')
 					.send();
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post.getCall(0),
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call.getCall(0),
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -490,8 +489,8 @@ describe('Mail', () => {
 					.setCC(['example2@example.com'])
 					.send();
 
-				sinon.assert.calledTwice(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post.getCall(1),
+				sinon.assert.calledTwice(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call.getCall(1),
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -506,7 +505,7 @@ describe('Mail', () => {
 
 			it('Should send \'bcc\' property always as an array', async () => {
 
-				MicroserviceCall.prototype.post.resolves({ body: { id: '5de565c07de99000110dcdef' } });
+				MicroserviceCall.prototype.call.resolves({ body: { id: '5de565c07de99000110dcdef' } });
 
 				const mail = session.getSessionInstance(Mail);
 
@@ -514,8 +513,8 @@ describe('Mail', () => {
 					.setBCC('example@example.com')
 					.send();
 
-				sinon.assert.calledOnce(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post.getCall(0),
+				sinon.assert.calledOnce(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call.getCall(0),
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,
@@ -531,8 +530,8 @@ describe('Mail', () => {
 					.setBCC(['example2@example.com'])
 					.send();
 
-				sinon.assert.calledTwice(MicroserviceCall.prototype.post);
-				sinon.assert.calledWithExactly(MicroserviceCall.prototype.post.getCall(1),
+				sinon.assert.calledTwice(MicroserviceCall.prototype.call);
+				sinon.assert.calledWithExactly(MicroserviceCall.prototype.call.getCall(1),
 					JANIS_MAILING_SERVICE,
 					JANIS_MAILING_NAMESPACE,
 					JANIS_MAILING_METHOD,

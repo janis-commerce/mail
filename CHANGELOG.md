@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.0] - 2021-08-03
+### Added
+- GitHub Actions for CI/CD workflows
+
+### Changed
+- Updated dependencies
+- Using `janis/microservice-call@^4.3.1` to obtain credentials from AWS Secrets Manager.
+
+### Removed
+- Travis integration
+
 ## [2.0.0] - 2020-04-06
 ### Added
 - `setUserCreated` setter
